@@ -10,20 +10,27 @@ import com.anushka.roomdemo.db.SubscriberRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SubscriberViewModel(private val repository: SubscriberRepository, private val context: Context): ViewModel() {
+// ViewModel class for handling UI-related data and actions
+class SubscriberViewModel(private val repository: SubscriberRepository, private val context: Context) : ViewModel() {
 
+    // LiveData for input fields in the UI
     val inputName = MutableLiveData<String>()
     val inputEmail = MutableLiveData<String>()
+
+    // LiveData for observing the list of subscribers from the repository
     val subscribers = repository.subscribers
 
+    // LiveData for dynamic button text in the UI
     val saveOrUpdateButtonText = MutableLiveData<String>()
     val clearAllOrDeleteButton = MutableLiveData<String>()
 
-    init{
+    // Initialize button text LiveData in the constructor
+    init {
         saveOrUpdateButtonText.value = "Save"
-        clearAllOrDeleteButton.value= "Clear All"
+        clearAllOrDeleteButton.value = "Clear All"
     }
 
+    // Function to handle save or update operation
     fun saveOrUpdate() {
         val name = inputName.value
         val email = inputEmail.value
@@ -35,45 +42,66 @@ class SubscriberViewModel(private val repository: SubscriberRepository, private 
         }
 
         try {
-            // Assuming insert function may throw exceptions, handle them appropriately
-            insert(Subscriber(0, name, email))
+            // Insert or update the subscriber in the repository
+            insertOrUpdateSubscriber(Subscriber(0, name, email))
 
             // Reset the input values after a successful operation
             inputName.value = ""
             inputEmail.value = ""
 
             // Optionally, show a success toast
-            showToast("Subscriber added successfully")
+            showToast("Subscriber added/updated successfully")
         } catch (e: Exception) {
             // Handle the exception, log it, or show an error message to the user
             e.printStackTrace()
 
             // Show an error toast
-            showToast("Error adding subscriber")
+            showToast("Error adding/updating subscriber")
         }
     }
 
-    fun clearAllOrDelete(){
+    // Function to handle clear all or delete operation
+    fun clearAllOrDelete() {
         clearAll()
     }
-    private fun insert(subscriber: Subscriber)=
-        viewModelScope.launch(Dispatchers.IO){
+
+    // Coroutine function to insert a subscriber in the background thread
+    private fun insertOrUpdateSubscriber(subscriber: Subscriber) =
+        viewModelScope.launch(Dispatchers.IO) {
+            // If subscriber has an ID (greater than 0), update it; otherwise, insert a new one
+            if (subscriber.id > 0) {
+                update(subscriber)
+            } else {
+                insert(subscriber)
+            }
+        }
+
+    // Coroutine function to insert a subscriber in the background thread
+    private fun insert(subscriber: Subscriber) =
+        viewModelScope.launch(Dispatchers.IO) {
             repository.insert(subscriber)
-    }
-    fun update(subscriber: Subscriber)=
-        viewModelScope.launch(Dispatchers.IO){
+        }
+
+    // Coroutine function to update a subscriber in the background thread
+    fun update(subscriber: Subscriber) =
+        viewModelScope.launch(Dispatchers.IO) {
             repository.update(subscriber)
         }
-    fun delete(subscriber: Subscriber)=
-        viewModelScope.launch(Dispatchers.IO){
+
+    // Coroutine function to delete a subscriber in the background thread
+    fun delete(subscriber: Subscriber) =
+        viewModelScope.launch(Dispatchers.IO) {
             repository.delete(subscriber)
         }
-    private fun clearAll()=
-        viewModelScope.launch(Dispatchers.IO){
+
+    // Coroutine function to clear all subscribers in the background thread
+    private fun clearAll() =
+        viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAll()
         }
+
+    // Function to display a toast message
     private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-
     }
 }
