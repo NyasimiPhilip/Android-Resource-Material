@@ -45,6 +45,12 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize the RecyclerView
         initRecyclerView()
+
+        subscriberViewModel.message.observe(this , Observer{
+            it.getContentIfNotHandled()?.let{
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     // Initialize the RecyclerView with a LinearLayoutManager
@@ -71,6 +77,7 @@ class MainActivity : AppCompatActivity() {
 
     // Display a Toast message when a list item is clicked
     private fun listItemClicked(subscriber: Subscriber) {
-        Toast.makeText(this, "selected name is ${subscriber.name}", Toast.LENGTH_LONG).show()
+      //Toast.makeText(this, "selected name is ${subscriber.name}", Toast.LENGTH_LONG).show()
+        subscriberViewModel.initUpdateAndDelete(subscriber)
     }
 }

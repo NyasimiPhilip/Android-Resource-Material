@@ -20,9 +20,9 @@ data class Subscriber(
     // Annotating this field with @ColumnInfo specifies the name of the column in the database.
     // In this case, the column is named "subscriber_name".
     @ColumnInfo(name = "subscriber_name")
-    val name: String,
+    var name: String,
 
     // Another column in the database named "subscriber_email".
     @ColumnInfo(name = "subscriber_email")
-    val email: String
+    var email: String
 )
