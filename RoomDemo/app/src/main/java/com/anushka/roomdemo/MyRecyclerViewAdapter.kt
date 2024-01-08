@@ -9,9 +9,10 @@ import com.anushka.roomdemo.db.Subscriber
 
 // Adapter class for RecyclerView that displays a list of Subscribers
 class MyRecyclerViewAdapter(
-    private val subscribersList: List<Subscriber>, // List of Subscriber objects to be displayed
     private val clickListener: (Subscriber) -> Unit // Listener to handle item clicks
 ) : RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>() {
+
+    private val subscribersList: MutableList<Subscriber> = mutableListOf() // Mutable list of Subscriber objects to be displayed
 
     // Called when RecyclerView needs a new ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -33,6 +34,13 @@ class MyRecyclerViewAdapter(
         val subscriber = subscribersList[position]
         // Bind the data to the ViewHolder
         holder.bind(subscriber, clickListener)
+    }
+
+    // Update the list of subscribers
+    fun setList(subscribers: List<Subscriber>) {
+        subscribersList.clear()
+        subscribersList.addAll(subscribers)
+        notifyDataSetChanged()
     }
 
     // ViewHolder class that represents each item in the RecyclerView

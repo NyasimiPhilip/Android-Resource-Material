@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     // ViewModel instance for handling UI-related data
     private lateinit var subscriberViewModel: SubscriberViewModel
 
+    private lateinit var adapter : MyRecyclerViewAdapter
+
     // Called when the activity is first created
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         // Initialize the RecyclerView
         initRecyclerView()
 
-        subscriberViewModel.message.observe(this , Observer{
+        subscriberViewModel.message.observe(this , Observer{ it ->
             it.getContentIfNotHandled()?.let{
                 Toast.makeText(this, it, Toast.LENGTH_LONG).show()
             }
@@ -56,7 +58,11 @@ class MainActivity : AppCompatActivity() {
     // Initialize the RecyclerView with a LinearLayoutManager
     private fun initRecyclerView() {
         binding.subscriberRecyclerView.layoutManager = LinearLayoutManager(this)
-
+        adapter = MyRecyclerViewAdapter { selectedItem: Subscriber ->
+            // Handle the click event for a list item
+            listItemClicked(selectedItem)
+        }
+        binding.subscriberRecyclerView.adapter = adapter
         // Display the list of subscribers in the RecyclerView
         displaySubscribersList()
     }
@@ -66,12 +72,8 @@ class MainActivity : AppCompatActivity() {
         subscriberViewModel.subscribers.observe(this, Observer {
             // Log the list of subscribers for debugging purposes
             Log.i("MyTag", it.toString())
-
-            // Set the adapter for the RecyclerView using a custom adapter (MyRecyclerViewAdapter)
-            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it) { selectedItem: Subscriber ->
-                // Handle the click event for a list item
-                listItemClicked(selectedItem)
-            }
+            adapter.setList(it)
+            adapter.notifyDataSetChanged()
         })
     }
 

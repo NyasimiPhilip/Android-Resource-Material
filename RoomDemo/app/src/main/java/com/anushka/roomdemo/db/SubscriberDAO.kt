@@ -21,16 +21,16 @@ interface SubscriberDAO {
 
     // Annotating the method with @Update specifies that it will be used for updating data in the database.
     @Update
-    suspend fun updateSubscriber(subscriber: Subscriber)
+    suspend fun updateSubscriber(subscriber: Subscriber) : Int
 
     // Annotating the method with @Delete specifies that it will be used for deleting data from the database.
     @Delete
-    suspend fun deleteSubscriber(subscriber: Subscriber)
+    suspend fun deleteSubscriber(subscriber: Subscriber) : Int
 
     // Annotating the method with @Query specifies a custom SQL query for deleting all data from the database table.
     // This query is used to clear all records in the SUBSCRIBER_DATA_TABLE.
     @Query("DELETE FROM SUBSCRIBER_DATA_TABLE")
-    suspend fun deleteAll()
+    suspend fun deleteAll() : Int
 
     // Annotating the method with @Query specifies a custom SQL query for retrieving all subscribers from the database.
     // The returned data is wrapped in a LiveData object, making it observable for UI updates.
