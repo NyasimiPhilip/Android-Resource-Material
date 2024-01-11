@@ -4,12 +4,15 @@ package com.anushka.notificationdemo
 // Import necessary Android and Kotlin libraries
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 
 // MainActivity class, extending AppCompatActivity
 class MainActivity : AppCompatActivity() {
@@ -19,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     // NotificationManager instance to handle notifications
     private var notificationManager: NotificationManager? = null
+
+    private val KEY_REPLY = "key_reply"
 
     // Override the onCreate method, called when the activity is first created
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +52,52 @@ class MainActivity : AppCompatActivity() {
         // Unique ID for the notification
         val notificationId = 45
 
+        // Create an Intent to launch the SecondActivity when the notification is tapped
+        val tapResultIntent = Intent(this, SecondActivity::class.java)
+
+        // Create a PendingIntent for the notification
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            tapResultIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        // Create RemoteInput for reply action
+        val remoteInput: RemoteInput = RemoteInput.Builder(KEY_REPLY).run {
+            setLabel("Insert your name here")
+                .build()
+        }
+
+        // Create reply action for the notification
+        val replyAction: NotificationCompat.Action = NotificationCompat.Action.Builder(
+            0,
+            "REPLY",
+            pendingIntent
+        ).addRemoteInput(remoteInput)
+            .build()
+
+        // Create Intents and PendingIntents for additional actions in the notification
+        val intent2 = Intent(this, DetailsActivity::class.java)
+        val pendingIntent2: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent2,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val action2: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0, "Details", pendingIntent2).build()
+
+        val intent3 = Intent(this, SettingsActivity::class.java)
+        val pendingIntent3: PendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent3,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val action3: NotificationCompat.Action =
+            NotificationCompat.Action.Builder(0, "Settings", pendingIntent3).build()
+
         // Build a notification using NotificationCompat.Builder
         val notification = NotificationCompat.Builder(this@MainActivity, channelID)
             .setContentTitle("Demo Title")
@@ -54,6 +105,10 @@ class MainActivity : AppCompatActivity() {
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setAutoCancel(true) // Remove the notification when clicked
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            //setContentIntent(pendingIntent) would have set the main action for the notification, launching the SecondActivity,
+            .addAction(replyAction) // Add reply action
+            .addAction(action2)    // Add an additional action for "Details"
+            .addAction(action3)    // Add an additional action for "Settings"
             .build()
 
         // Notify the NotificationManager to display the notification
