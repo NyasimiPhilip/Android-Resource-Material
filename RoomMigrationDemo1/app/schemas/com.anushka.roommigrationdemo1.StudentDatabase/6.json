@@ -1,0 +1,55 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 6,
+    "identityHash": "3d2effde3ad594d807225d9788c9cab3",
+    "entities": [
+      {
+        "tableName": "student_info",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`student_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `student_name` TEXT NOT NULL DEFAULT 'No Name', `student_email` TEXT DEFAULT 'No Email', `subject_name` TEXT NOT NULL DEFAULT 'No subject')",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "student_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "student_name",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'No Name'"
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "student_email",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "'No Email'"
+          },
+          {
+            "fieldPath": "course",
+            "columnName": "subject_name",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'No subject'"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "student_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3d2effde3ad594d807225d9788c9cab3')"
+    ]
+  }
+}

@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         // Find views by their IDs
         val nameEditText = findViewById<EditText>(R.id.etName)
         val emailEditText = findViewById<EditText>(R.id.etEmail)
+        val courseEditText = findViewById<EditText>(R.id.etCourse)
         val button = findViewById<Button>(R.id.btnSubmit)
 
         // Set a click listener for the submit button
@@ -27,13 +28,15 @@ class MainActivity : AppCompatActivity() {
                 // Get the name and email values from the EditText fields
                 nameEditText.text.let {
                     // Insert a new Student into the Room Database using the DAO
-                    dao.insertStudent(Student(0, it.toString(), emailEditText.text.toString()))
+                    dao.insertStudent(Student(0, it.toString(),emailEditText.text.toString(), courseEditText.text.toString()))
 
                     // Clear the EditText fields after inserting the student
                     nameEditText.setText("")
                     emailEditText.setText("")
+                    courseEditText.setText("")
                 }
             }
         }
     }
+
 }

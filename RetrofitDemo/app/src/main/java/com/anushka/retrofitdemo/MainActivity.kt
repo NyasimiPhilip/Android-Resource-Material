@@ -1,5 +1,6 @@
 package com.anushka.retrofitdemo
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -19,17 +20,22 @@ class MainActivity : AppCompatActivity() {
 
     // TextView for displaying API response in the UI
     private lateinit var textView: TextView
-
+    private var apiLevel: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Get the current API level
+        apiLevel = Build.VERSION.SDK_INT
+
 
         // Initialize the TextView
         textView = findViewById(R.id.textView)
 
         // Make API calls and observe responses
-        getRequestWithQueryParameter()
-        getRequestWithPathParameter()
+       // getRequestWithQueryParameter()
+       // getRequestWithPathParameter()
+        uploadAlbum()
     }
 
     // Function to make an API call with query parameters
@@ -94,5 +100,23 @@ class MainActivity : AppCompatActivity() {
             // Display a Toast message with the title
             Toast.makeText(applicationContext, title, Toast.LENGTH_LONG).show()
         })
+    }
+
+    private fun uploadAlbum(){
+        val album = AlbumItem(0,"My title", 3)
+        val postResponse: LiveData<Response<AlbumItem>> = liveData {
+            val response  = retService.uploadAlbum(album)
+            emit(response)
+        }
+        postResponse.observe(this, Observer {
+            val receivedAlbumItem: AlbumItem? = it.body()
+                // Display album information in the TextView
+                val result: String = " " + "Album Title : ${receivedAlbumItem?.title}" + "\n" +
+                        " " + "Album id : ${receivedAlbumItem?.id}" + "\n" +
+                        " " + "User id : ${receivedAlbumItem?.userId}" + "\n" + "\n\n\n"
+            textView.text = result + "\n" + apiLevel
+        })
+
+
     }
 }

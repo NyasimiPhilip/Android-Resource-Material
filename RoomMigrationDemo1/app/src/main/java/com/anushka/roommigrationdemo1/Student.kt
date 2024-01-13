@@ -8,11 +8,15 @@ import androidx.room.PrimaryKey
 data class Student(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "student_id")
-    val id : Int,
+    val id: Long,
 
-    @ColumnInfo(name = "student_name")
-    var name : String,
+    @ColumnInfo(name = "student_name", defaultValue = "No Name")
+    val name: String,
 
     @ColumnInfo(name = "student_email", defaultValue = "No Email")
-    var email : String
+    val email: String?,
+
+    @ColumnInfo(name = "subject_name", defaultValue = "No subject")
+    val course: String
 )
+
