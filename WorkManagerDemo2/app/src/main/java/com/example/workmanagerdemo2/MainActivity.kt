@@ -104,7 +104,5 @@ class MainActivity : AppCompatActivity() {
         val periodicWorkRequest = PeriodicWorkRequest.Builder(DownloadingWorker::class.java, 15, TimeUnit.MINUTES)
             .build()
         WorkManager.getInstance(applicationContext).enqueue(periodicWorkRequest)
-
-
     }
 }
