@@ -11,6 +11,9 @@
     <color name="grey1">#575656</color>
     <color name="grey2">#4A4141</color>
 
+    <color name="startButtonColorStarted">#FF0000</color>
+    <color name="startButtonColorStopped">#00FF00</color>
+
 
 
 </resources>

@@ -34,8 +34,6 @@ class StopWatchService : Service() {
 
     // onDestroy method called when the service is being destroyed
     override fun onDestroy() {
-        // Log a message indicating that the service is being destroyed
-        Log.i(TAG, "Service is being destroyed")
 
         // Cancel the timer to stop scheduled tasks
         timer.cancel()
@@ -60,9 +58,7 @@ class StopWatchService : Service() {
 
             // Increment the time value
             time++
-
-            // Put the updated time value into the intent
-            intent.putExtra(UPDATED_TIME, time)
+            intent.putExtra(CURRENT_TIME, time)
 
             // Send a broadcast with the intent
             sendBroadcast(intent)

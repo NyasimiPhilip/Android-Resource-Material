@@ -1,10 +1,13 @@
 package com.example.dependencyInjection
 
 import dagger.Component
+import javax.inject.Singleton
 
-@Component(modules = [MemoryCardModule::class])
+@Singleton
+@Component(modules = [MemoryCardModule::class, NCBatteryModule::class
+])
 interface smartphoneFunction {
-    fun getSmartPhone(): SmartPhone
+   fun inject(mainActivity: MainActivity)
 }
 /**
 In Dagger, an interface annotated with @Component is known as a Dagger component interface. Dagger uses this interface to generate a Dagger component implementation at compile time. Dagger components play a crucial role in the dependency injection process. Let's break down why you need this interface when working with Dagger:

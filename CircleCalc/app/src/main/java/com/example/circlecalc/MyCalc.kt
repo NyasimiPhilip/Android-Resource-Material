@@ -1,14 +1,20 @@
 package com.example.circlecalc
 
+// Implementation of the Calculations interface for circle calculations
 class MyCalc : Calculations {
 
+    // Constant value for pi
     private val pi = 3.14
 
-    override fun calculateCircumference(redius: Double): Double {
-        return 2 * pi * redius
+    // Function to calculate the circumference of a circle based on the provided radius
+    // Returns the calculated circumference
+    override fun calculateCircumference(radius: Double): Double {
+        return 2 * pi * radius
     }
 
-    override fun calculateArea(redius: Double): Double {
-        return pi * redius * redius
+    // Function to calculate the area of a circle based on the provided radius
+    // Returns the calculated area
+    override fun calculateArea(radius: Double): Double {
+        return pi * radius * radius
     }
 }

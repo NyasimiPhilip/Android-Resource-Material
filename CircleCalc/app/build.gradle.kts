@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     val lifecycle_version = "2.6.2"
     val arch_version = "2.2.0"
     implementation("androidx.core:core-ktx:1.9.0")
@@ -60,4 +61,9 @@ dependencies {
     testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version")
     testImplementation ("com.google.truth:truth:1.1.4")
     testImplementation ("com.google.truth.extensions:truth-java8-extension:1.1.3")
+
+
+    val mockitoVersion = "2.19.0"
+    testImplementation ("org.mockito:mockito-core:$mockitoVersion")
+
 }
