@@ -10,16 +10,11 @@
         android:id="@+id/btnCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:backgroundTint="@android:color/darker_gray"
         android:padding="16dp"
-        android:textColor="@color/white"
         android:textSize="34sp"
-        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/black"
-        app:strokeWidth="10dp" />
+      />
 </androidx.constraintlayout.widget.ConstraintLayout>
