@@ -68,14 +68,11 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation ("androidx.compose.foundation:foundation:1.1.0")
-    implementation ("androidx.compose.material:material:1.1.0")
+    implementation ("androidx.compose.foundation:foundation:1.6.0")
+    implementation ("androidx.compose.material:material:1.6.0")
 
-    def lifecycle_version = "2.7.0"
 
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
-    // LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata:$lifecycle_version")
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0"
+
 
 }
