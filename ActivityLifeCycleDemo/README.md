@@ -1,8 +1,8 @@
-## <span style="color:blue">Android Activity Lifecycle Demonstration</span>
+## <font color="blue">Android Activity Lifecycle Demonstration</font>
 
 This is code for an Android application that demonstrates the lifecycle of activities in Android, specifically focusing on the MainActivity and SecondActivity.
 
-### <span style="color:purple">MainActivity:</span>
+### <font color="purple">MainActivity:</font>
 
 - When the activity is created (<code>onCreate()</code>), it sets the layout from <code>activity_main.xml</code>.
 - It initializes various UI components like TextView, EditText, and Button.
@@ -12,7 +12,7 @@ This is code for an Android application that demonstrates the lifecycle of activ
 - Clicking the "Offers" button opens the SecondActivity, passing the entered name as an extra with the intent.
 - It also logs various lifecycle events (<code>onStart()</code>, <code>onResume()</code>, <code>onPause()</code>, <code>onStop()</code>, <code>onDestroy()</code>, <code>onRestart()</code>).
 
-### <span style="color:orange">SecondActivity:</span>
+### <font color="orange">SecondActivity:</font>
 
 - When the activity is created (<code>onCreate()</code>), it sets the layout from <code>activity_second.xml</code>.
 - It retrieves the username passed from the MainActivity using the intent.
