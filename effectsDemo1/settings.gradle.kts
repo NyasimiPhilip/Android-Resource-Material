@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "effectsDemo1"
 include(":app")
+ 

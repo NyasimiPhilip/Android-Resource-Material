@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -43,12 +45,23 @@ class MyViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            myFlow1.collect {
+            myFlow1
+                .filter{
+                    i -> i%3 == 0
+                }
+                .map{
+                    it -> showMessage(it)
+                }
+                .collect {
                 delay(10000)
                 Log.i("MYTAG", "Consumed $it")
             }
         }
     }
+    private fun showMessage(count: Int): String{
+        return "Hello $count"
+    }
+
 
     /**
      * Demonstrates back pressure handling with buffering using the 'buffer' operator.
@@ -66,7 +79,7 @@ class MyViewModel : ViewModel() {
 
         viewModelScope.launch {
             myFlow1.collect {
-                delay(10000)
+                delay(2000)
                 Log.i("MYTAG", "Consumed $it")
             }
         }
@@ -76,7 +89,7 @@ class MyViewModel : ViewModel() {
      * Demonstrates the usage of `collectLatest` to only process the latest emitted value.
      * It emits values with a delay of 500 milliseconds and processes the latest emitted value
      * with a simulated async delay of 1 second.
-     */
+
     fun collectLatest() = runBlocking {
         val myFlow = flow<Int> {
             for (i in 1..5) {
@@ -102,4 +115,6 @@ class MyViewModel : ViewModel() {
 
         job.join()
     }
+    */
+
 }

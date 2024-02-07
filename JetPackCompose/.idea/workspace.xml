@@ -10,7 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1263fa6a-d201-4bea-8c08-f2deeb316b59" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Box/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Box/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Box/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Box/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Box/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Box/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Box/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Box/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Box/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/Box/app/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Box/app/src/main/java/com/android/myapplication/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Box/app/src/main/java/com/android/myapplication/MainActivity.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
