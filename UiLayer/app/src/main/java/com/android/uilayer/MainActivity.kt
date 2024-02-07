@@ -5,8 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -106,7 +108,7 @@ fun MainScreen(
                         counterViewModel.onEvent(CounterEvent.ValueEntered(it))
                     },
                     modifier = modifier.fillMaxWidth(),
-                    keyboardOptions = KeyboardOptions(
+                    keyboardOptions = KeyboardOptions(//Avoid Invalid input exceptions
                         keyboardType = KeyboardType.Number
                     ),
                     textStyle = TextStyle(
@@ -116,6 +118,7 @@ fun MainScreen(
                     ),
                     label = { Text(text = "New Count") }
                 )
+                Spacer(modifier = Modifier.height(200.dp))
 
                 // Button to count the value
                 if(screenState.isCountButtonVisible) {
@@ -132,6 +135,7 @@ fun MainScreen(
                         )
                     }
                 }
+                Spacer(modifier = Modifier.height(20.dp))
 
                 // Button to reset the count value
                 Button(
