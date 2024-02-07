@@ -1,13 +1,5 @@
 ## Kotlin Coroutine Usage in Android Application
 
-### Imports:
-
-The necessary classes and functions are imported, including `AppCompatActivity`, `Bundle`, `TextView`, `ProgressBar`, `Toast`, and various coroutine-related classes from the `kotlinx.coroutines` package.
-
-### MainActivity class:
-
-This class extends `AppCompatActivity` and represents the main activity of the Android application.
-
 ### `onCreate` method:
 
 This method is called when the activity is first created. Here's what happens inside it:
