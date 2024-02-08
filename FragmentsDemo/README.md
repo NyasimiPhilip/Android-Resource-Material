@@ -49,5 +49,5 @@
   <li><strong>LiveData:</strong> Observable data holder class provided by the Android Architecture Components. Enables communication between fragments and ViewModels, facilitating dynamic updates to the UI based on changes in data.</li>
 </ul>
 
-<p><strong>Note:</strong> This Fragments Demo app serves as a demonstration of fragment usage and interaction within an Android app, following the MVVM (Model-View-ViewModel) architecture pattern. Each fragment showcases different aspects of dynamic content display and user interaction.</p>
+<p><strong>Note:</strong> This Fragments Demo app serves as a demonstration of fragment usage and interaction within an Android app, following the MVVM (Model-View-ViewModel) architecture pattern. Each fragment showcases different aspects of dynamic content display and user interaction</p>
 
