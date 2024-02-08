@@ -49,5 +49,5 @@
 <h2>Key Concepts:</h2>
 <ul>
   <li><strong>Coroutines:</strong> Used to perform asynchronous tasks without blocking the main thread. Dispatchers are used to specify the thread on which the coroutine runs (Dispatchers.IO for background work, Dispatchers.Main for UI updates). launch function is used to start a coroutine.</li>
-  <li><strong>Suspending Functions:</strong> delay function is a suspending function that pauses the coroutine without blocking the thread.</li>
+  <li><strong>Suspending Functions:</strong> delay function is a suspending function that pauses the coroutine without blocking the thread</li>
 </ul>
