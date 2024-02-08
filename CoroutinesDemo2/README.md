@@ -64,5 +64,5 @@
 <h2>Key Concepts:</h2>
 <ul>
   <li><strong>Asynchronous Data Fetching:</strong> Demonstrates fetching data asynchronously using coroutines. Uses async to perform parallel asynchronous operations and await to wait for their completion.</li>
-  <li><strong>Coroutine Scope:</strong> Uses coroutine scope to manage the lifecycle of coroutines and their cancellation.</li>
+  <li><strong>Coroutine Scope:</strong> Uses coroutine scope to manage the lifecycle of coroutines and their cancellation</li>
 </ul>
