@@ -1,5 +1,4 @@
-
-del Demo 1</h2>
+<h1>ViewModel</h1>
 <p>The ViewModel Demo 1 Android app showcases the implementation of ViewModel architecture component to manage UI data efficiently, utilizing data binding for seamless interaction between UI components and ViewModel properties.</p>
 
 <h2>Features:</h2>
