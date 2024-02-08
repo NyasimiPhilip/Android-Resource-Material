@@ -4,8 +4,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [MemoryCardModule::class, NCBatteryModule::class
-])
+@Component(modules = [MemoryCardModule::class, NCBatteryModule::class])
 interface smartphoneFunction {
    fun inject(mainActivity: MainActivity)
 }
