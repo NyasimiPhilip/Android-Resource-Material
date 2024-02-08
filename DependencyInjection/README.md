@@ -79,5 +79,3 @@
 </ul>
 
 <p><strong>Note:</strong> This app serves as a basic demonstration of dependency injection and Dagger usage in an Android application, facilitating better code organization and testing practices.</p>
-njectio</h2>
-<p>The Dependency Injection App demonstrates the usage of dependency injection (DI) and Dagger in an Android application. Dependency injection is a design pattern used to increase modularity and testability by removing direct dependencies between classes. Dagger is a popular DI library for Android.</p>
