@@ -100,5 +100,5 @@
 <h2>Usage:</h2>
 <ul>
   <li>Running Tests: Tests can be executed using the appropriate testing framework (JUnit in this case) integrated with the build system (e.g., Gradle).</li>
-  <li>Test Results: Upon execution, the testing framework will report the success or failure of each test case, providing feedback on the correctness of the implemented functionality.</li>
+  <li>Test Results: Upon execution, the testing framework will report the success or failure of each test case, providing feedback on the correctness of the implemented functionality</li>
 </ul>
