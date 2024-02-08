@@ -29,8 +29,7 @@ class MainActivity : AppCompatActivity() {
         factory = CalcViewModelFactory(MyCalc())
 
         // Create an instance of CalcViewModel using the ViewModelProvider with the factory
-        viewModel = ViewModelProvider(this, factory)
-            .get(CalcViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory)[CalcViewModel::class.java]
 
         // Set the ViewModel instance for data binding in the layout
         binding.myViewModel = viewModel
