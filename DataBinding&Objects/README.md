@@ -30,4 +30,4 @@ The `android:text` attributes of the `name_text` and `email_text` TextViews are 
 
 ## Summary
 
-This code showcases the power of Data Binding in Android, allowing for seamless integration of data between Kotlin code and XML layouts. By binding data directly to XML views, it simplifies UI development and promotes a more maintainable and readable codebase.
+This code showcases the power of Data Binding in Android, allowing for seamless integration of data between Kotlin code and XML layouts. By binding data directly to XML views, it simplifies UI development and promotes a more maintainable and readable codebase
