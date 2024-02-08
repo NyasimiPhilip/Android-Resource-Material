@@ -34,4 +34,4 @@ Data binding eliminates the need for manual view updates by synchronizing UI com
 
 ## Summary
 
-The code demonstrates how to use Data Binding with a ViewModel to create a responsive UI in an Android application. The ViewModel contains the logic for handling UI interactions, while Data Binding ensures seamless communication between the layout and the ViewModel. This approach promotes separation of concerns and improves code maintainability.
+The code demonstrates how to use Data Binding with a ViewModel to create a responsive UI in an Android application. The ViewModel contains the logic for handling UI interactions, while Data Binding ensures seamless communication between the layout and the ViewModel. This approach promotes separation of concerns and improves code maintainability
