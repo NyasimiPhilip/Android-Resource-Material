@@ -1,5 +1,5 @@
 
-del Demo 1</h2>
+<h1>ViewModel Demo 1</h1>
 <p>The ViewModel Demo 1 Android app demonstrates the usage of ViewModel architecture component to manage and update UI data. It includes a simple UI with a text view displaying a count value and a button to increment the count.</p>
 
 <h2>Features:</h2>
