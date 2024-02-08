@@ -59,4 +59,4 @@
   <li><strong>Dagger:</strong> A compile-time dependency injection framework for Java and Android. Used by Hilt under the hood to generate and manage dependency injection code.</li>
 </ul>
 
-<p><strong>Note:</strong> This Hilt Demo app serves as an introductory example of integrating Hilt into an Android project for dependency injection. It demonstrates the basic setup and usage of Hilt within an application context.</p>
+<p><strong>Note:</strong> This Hilt Demo app serves as an introductory example of integrating Hilt into an Android project for dependency injection. It demonstrates the basic setup and usage of Hilt within an application context</p>
