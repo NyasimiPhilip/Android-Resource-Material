@@ -79,4 +79,4 @@
   <li><strong>ViewModelFactory:</strong> Responsible for creating instances of ViewModel with dependencies, promoting loose coupling and testability.</li>
 </ul>
 
-<p><strong>Note:</strong> The Room Persistence Library Demo showcases best practices for implementing database operations in Android apps using Room and follows the MVVM architecture pattern for a clean separation of concerns and maintainable codebase.</p>
+<p><strong>Note:</strong> The Room Persistence Library Demo showcases best practices for implementing database operations in Android apps using Room and follows the MVVM architecture pattern for a clean separation of concerns and maintainable codebase</p>
