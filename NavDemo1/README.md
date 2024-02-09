@@ -1,12 +1,11 @@
-<h1>Introduction: NavDemo1 Android Application</h1>
-
+<h1>Introduction:</h1>
 <p>The NavDemo1 Android application showcases basic navigation functionality using the Navigation Component, enabling seamless navigation between two fragments: HomeFragment and SecondFragment. Through this demonstration, users gain insights into implementing navigation within an Android application.</p>
 
 <h2>Features:</h2>
 <ul>
-  <li><strong>Fragment Navigation:</strong> Users can navigate from the HomeFragment to the SecondFragment by entering text and clicking a button.</li>
-  <li><strong>Data Passing:</strong> User input is bundled and passed as an argument from the HomeFragment to the SecondFragment, demonstrating data communication between fragments.</li>
-  <li><strong>Animation Effects:</strong> Smooth animation effects are applied during fragment transitions to enhance the user experience.</li>
+  <li>Fragment Navigation: Users can navigate from the HomeFragment to the SecondFragment by entering text and clicking a button.</li>
+  <li>Data Passing: User input is bundled and passed as an argument from the HomeFragment to the SecondFragment, demonstrating data communication between fragments.</li>
+  <li>Animation Effects: Smooth animation effects are applied during fragment transitions to enhance the user experience.</li>
 </ul>
 
 <h2>Components:</h2>
@@ -25,4 +24,14 @@
   <li><strong>Data Binding:</strong> Technique for binding UI components in layouts to data sources, simplifying UI development and enabling efficient data communication.</li>
 </ul>
 
-<p><strong>Note:</strong> The NavDemo1 app serves as a basic illustration of navigation concepts using the Navigation Component in Android.</p>
+<h2>Data Flow:</h2>
+<p><strong>HomeFragment to SecondFragment:</strong></p>
+<ol>
+  <li>User inputs text in the EditText view within the HomeFragment.</li>
+  <li>Upon clicking the button, the input text is retrieved from the EditText.</li>
+  <li>If the input text is not empty, it is bundled into a Bundle object.</li>
+  <li>The bundle is passed as an argument to the navigation action, triggering a transition to the SecondFragment.</li>
+  <li>In the SecondFragment, the input text is retrieved from the arguments bundle and displayed in a TextView.</li>
+</ol>
+
+<p><strong>Note:</strong> The NavDemo1 app serves as an educational tool to illustrate basic navigation concepts using the Navigation Component in Android. Developers can leverage this example to understand how to implement fragment navigation and data passing effectively within their own applications.</p>
