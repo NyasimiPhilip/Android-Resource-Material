@@ -12,23 +12,20 @@
 
 <h2>Components:</h2>
 <ul>
-  <li><strong>MainActivity:</strong> Initiates API calls, observes responses, and updates the UI.</li>
-  <li><strong>AlbumService:</strong> Retrofit service interface defining methods for API endpoints.</li>
-  <li><strong>RetrofitInstance:</strong> Singleton class providing a configured Retrofit instance.</li>
-  <li><strong>AlbumItem:</strong> Data class representing an item in the Album, parsed from JSON responses.</li>
-  <li><strong>DetailsActivity:</strong> Activity for displaying details of a specific album item.</li>
+  <li><strong>MainActivity:</strong> Initiates API calls using Retrofit's service interface (AlbumService), observes API responses, and updates the UI accordingly.</li>
+  <li><strong>AlbumService:</strong> Retrofit service interface defining methods for API endpoints, including GET and POST requests to the JSONPlaceholder API.</li>
+  <li><strong>RetrofitInstance:</strong> Singleton class providing a configured Retrofit instance with the base URL of the JSONPlaceholder API, Gson converter factory, OkHttpClient with logging, and timeout settings.</li>
+  <li><strong>AlbumItem:</strong> Data class representing an item in the Album, parsed from JSON responses received from the JSONPlaceholder API.</li>
+  <li><strong>DetailsActivity:</strong> Activity for displaying details of a specific album item retrieved from the JSONPlaceholder API.</li>
   <li><strong>SettingsActivity:</strong> Activity for configuring app settings.</li>
 </ul>
 
 <h2>Data Flow:</h2>
-<p><strong>MainActivity:</strong> Initiates API calls using methods defined in AlbumService. AlbumService interfaces with Retrofit to execute HTTP requests asynchronously. RetrofitInstance provides a configured Retrofit instance for making API calls. API responses are observed using LiveData in MainActivity, and the UI is updated accordingly. OkHttpClient handles network operations, including logging and timeout settings.</p>
+<p><strong>MainActivity:</strong> Initiates API calls using methods defined in AlbumService. AlbumService interfaces with Retrofit to execute HTTP requests asynchronously. RetrofitInstance provides a configured Retrofit instance for making API calls to the JSONPlaceholder API. API responses are observed using LiveData in MainActivity, and the UI is updated accordingly. OkHttpClient handles network operations, including logging and timeout settings.</p>
 
 <h2>Key Concepts:</h2>
 <ul>
-  <li><strong>Retrofit:</strong> A powerful HTTP client library simplifying communication with RESTful web services.</li>
-  <li><strong>LiveData:</strong> A lifecycle-aware observable data holder class for handling asynchronous data streams.</li>
-  <li><strong>OkHttpClient:</strong> An HTTP client for making network requests with features like logging and timeouts.</li>
+  <li><strong>Retrofit:</strong> A widely-used HTTP client library for Android and Java applications, simplifying communication with RESTful web services like the JSONPlaceholder API.</li>
+  <li><strong>LiveData:</strong> A lifecycle-aware observable data holder class, used for handling asynchronous data streams, particularly useful for observing API responses.</li>
+  <li><strong>OkHttpClient:</strong> An HTTP client for Android and Java applications, used for making network requests with features like logging and timeouts, essential for handling network operations effectively.</li>
 </ul>
-
-<p><strong>Note:</strong> The RetrofitDemo app interacts with the JSONPlaceholder API, which provides simulated endpoints for testing purposes. Ensure proper error handling and exception management to handle network-related issues effectively.</p>
-</body>
