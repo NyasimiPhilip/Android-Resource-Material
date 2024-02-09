@@ -45,4 +45,4 @@
   <li><strong>ViewModelFactory:</strong> Creates ViewModel instances with dependencies, promoting loose coupling and testability.</li>
 </ul>
 
-<p><strong>Note:</strong> The Room Persistence Library Demo with Database Migrations exemplifies best practices for implementing database operations in Android apps using Room. It demonstrates the importance of handling schema changes efficiently to ensure data integrity and app stability.</p>
+<p><strong>Note:</strong> The Room Persistence Library Demo with Database Migrations exemplifies best practices for implementing database operations in Android apps using Room. It demonstrates the importance of handling schema changes efficiently to ensure data integrity and app stability</p>
