@@ -78,4 +78,4 @@
   <li><strong>Components:</strong> Glue code that uses modules to provide dependencies.</li>
 </ul>
 
-<p><strong>Note:</strong> This app serves as a basic demonstration of dependency injection and Dagger usage in an Android application, facilitating better code organization and testing practices.</p>
+<p><strong>Note:</strong> This app serves as a basic demonstration of dependency injection and Dagger usage in an Android application, facilitating better code organization and testing practices</p>
