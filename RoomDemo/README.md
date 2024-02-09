@@ -46,6 +46,12 @@
       <li>Defines the structure of the Subscriber table in the Room database.</li>
     </ul>
   </li>
+  <li><strong>SubscriberViewModelFactory:</strong>
+    <ul>
+      <li>Factory class responsible for creating instances of SubscriberViewModel.</li>
+      <li>Receives the repository providing access to data and the context required for ViewModel initialization.</li>
+    </ul>
+  </li>
   <li><strong>Event:</strong>
     <ul>
       <li>A wrapper class used for exposing data via LiveData that represents an event.</li>
@@ -70,6 +76,7 @@
   <li><strong>ViewModel:</strong> Manages UI-related data and state, survives configuration changes, and separates business logic from UI components.</li>
   <li><strong>LiveData:</strong> Provides observable data that is lifecycle-aware and notifies UI components of data changes.</li>
   <li><strong>Repository Pattern:</strong> Separates data source logic from ViewModel, making it easier to test and maintain.</li>
+  <li><strong>ViewModelFactory:</strong> Responsible for creating instances of ViewModel with dependencies, promoting loose coupling and testability.</li>
 </ul>
 
 <p><strong>Note:</strong> The Room Persistence Library Demo showcases best practices for implementing database operations in Android apps using Room and follows the MVVM architecture pattern for a clean separation of concerns and maintainable codebase.</p>
