@@ -6,7 +6,14 @@ import android.content.Context
 import androidx.room.*
 import androidx.room.migration.AutoMigrationSpec
 
-// Define the SubscriberDatabase class as a RoomDatabase
+/**
+ * Database class responsible for managing the SQLite database using Room.
+ * This class is a RoomDatabase, which provides an abstraction layer over SQLite operations.
+ * It contains a table for Subscribers and manages database migrations.
+ *
+ * @property subscriberDAO Abstract property to access the Data Access Object (DAO) for Subscribers.
+ * @constructor Creates an instance of the SubscriberDatabase.
+ */
 @Database(
     // Specify the entities (tables) in the database
     entities = [Subscriber::class],
@@ -16,7 +23,8 @@ import androidx.room.migration.AutoMigrationSpec
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = SubscriberDatabase.Migration1To2::class),
         AutoMigration(from = 2, to = 3, spec = SubscriberDatabase.Migration2To3::class)
-    ]
+    ],
+    exportSchema = true // Set exportSchema to true
 )
 // Make the class abstract to create an instance using RoomDatabase
 abstract class SubscriberDatabase : RoomDatabase() {
@@ -29,7 +37,13 @@ abstract class SubscriberDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: SubscriberDatabase? = null
 
-        // Define a function to get or create an instance of the database
+        /**
+         * Get or create an instance of the SubscriberDatabase.
+         * This function ensures that only one instance of the database is created.
+         *
+         * @param context The application context.
+         * @return The singleton instance of the SubscriberDatabase.
+         */
         fun getInstance(context: Context): SubscriberDatabase {
             synchronized(this) {
                 var instance = INSTANCE
