@@ -1,4 +1,4 @@
-h1>LiveData Demo</h1>
+<h1>LiveData Demo</h1>
 
 <p>The LiveData Demo Android app demonstrates the usage of LiveData and ViewModel to fetch and observe data changes from a repository asynchronously. LiveData is utilized to automatically update the UI when the underlying data changes, while ViewModel manages the UI-related data and ensures data consistency across configuration changes.</p>
 
