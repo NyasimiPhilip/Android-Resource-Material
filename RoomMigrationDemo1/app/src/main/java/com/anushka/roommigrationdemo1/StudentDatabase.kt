@@ -7,18 +7,22 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.migration.Migration
 
+// Declaring a Room Database with the specified entities and version
 @Database(
     entities = [Student::class],
     version = 6
 )
 abstract class StudentDatabase : RoomDatabase() {
 
+    // Declaring an abstract value for accessing the Data Access Object (DAO)
     abstract val subscriberDAO: StudentDAO
 
+    // Companion object to hold static members and functions
     companion object {
         @Volatile
         private var INSTANCE: StudentDatabase? = null
 
+        // Defining a migration from version 5 to version 6
         private val MIGRATION_5_6: Migration = object : Migration(5, 6) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Check if the table exists
@@ -45,20 +49,24 @@ abstract class StudentDatabase : RoomDatabase() {
             }
         }
 
+        // Function to obtain an instance of the database
         fun getInstance(context: Context): StudentDatabase {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
+                    // Creating a new instance of the database using Room's databaseBuilder
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         StudentDatabase::class.java,
                         "student_data_database"
                     )
+                        // Adding the migration from version 5 to 6
                         .addMigrations(MIGRATION_5_6)
-                        //.fallbackToDestructiveMigration()
+                        //.fallbackToDestructiveMigration() // Optional: Uncomment to allow destructive migration
                         .build()
                     INSTANCE = instance
                 }
+                // Returning the database instance
                 return instance
             }
         }

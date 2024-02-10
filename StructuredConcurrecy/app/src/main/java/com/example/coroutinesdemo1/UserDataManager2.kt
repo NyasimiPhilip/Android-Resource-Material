@@ -21,7 +21,6 @@ class UserDataManager2 {
                 delay(3000)
                 return@async 70
             }
-
         }
         return count + deferred.await()
     }

@@ -1,4 +1,4 @@
-package com.anushka.notificationsdemo
+package com.anushka.notificationdemo
 
 import org.junit.Test
 
