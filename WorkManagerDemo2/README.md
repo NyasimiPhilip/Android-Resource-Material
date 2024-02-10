@@ -45,5 +45,3 @@
   <li><strong>Chaining Work Requests:</strong> Shows how to chain multiple background tasks together, defining dependencies and execution order.</li>
   <li><strong>Observing Work Info:</strong> Observes the status of work requests and updates the UI with the corresponding work info, providing feedback to the user.</li>
 </ul>
-
-<p>Overall, the WorkManagerDemo2 app serves as a practical example of</p>
