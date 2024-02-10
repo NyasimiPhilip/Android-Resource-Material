@@ -66,10 +66,12 @@ fun MainScreen(
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
+
     /*
     LaunchedEffect(total) {
+
         if (total > 200) {
-            snackbarHostState.showSnackbar("Total exceeded 200!")
+            snackbarHostState.showSnackbar("Total exceededKKKKJKBHBHB 200!")
         }
     }*/
     Scaffold(
