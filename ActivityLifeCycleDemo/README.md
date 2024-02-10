@@ -12,7 +12,7 @@ This is code for an Android application that demonstrates the lifecycle of activ
 - Clicking the "Offers" button opens the SecondActivity, passing the entered name as an extra with the intent.
 - It also logs various lifecycle events (<code>onStart()</code>, <code>onResume()</code>, <code>onPause()</code>, <code>onStop()</code>, <code>onDestroy()</code>, <code>onRestart()</code>).
 
-###SecondActivity:</font>
+<h2>SecondActivity</h2>
 
 - When the activity is created (<code>onCreate()</code>), it sets the layout from <code>activity_second.xml</code>.
 - It retrieves the username passed from the MainActivity using the intent.
