@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         // Set an OnClickListener on the Button
         button.setOnClickListener {
-            // When the Button is clicked, invoke the setOneTimeWorkRequest function
+            // When the Button is clicked,
            // setOneTimeWorkRequest()
             setPeriodicWorkRequest()
         }
