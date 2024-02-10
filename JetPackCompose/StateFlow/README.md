@@ -1,5 +1,5 @@
 <h1>Introduction</h1>
-<p>The provided code demonstrates the use of StateFlow in an Android application to manage and update application state reactively. It also illustrates the use of coroutines for handling asynchronous operations.</p>
+<p>The aopp demonstrates the use of StateFlow in an Android application to manage and update application state reactively. It also illustrates the use of coroutines for handling asynchronous operations.</p>
 
 <h2>Features</h2>
 <ul>
