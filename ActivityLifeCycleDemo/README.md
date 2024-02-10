@@ -2,7 +2,7 @@
 
 This is code for an Android application that demonstrates the lifecycle of activities in Android, specifically focusing on the MainActivity and SecondActivity.
 
-### MainActivity:</font>
+<h2> MainActivity</h2>
 
 - When the activity is created (<code>onCreate()</code>), it sets the layout from <code>activity_main.xml</code>.
 - It initializes various UI components like TextView, EditText, and Button.
