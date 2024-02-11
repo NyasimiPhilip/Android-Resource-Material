@@ -4,6 +4,7 @@ package com.android.sqlliteopenhelper;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,6 +21,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.android.sqlliteopenhelper.adapter.ContactsAdapter;
 import com.android.sqlliteopenhelper.db.ContactAppDatabase;
@@ -53,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
                 getApplicationContext(),
                 ContactAppDatabase.class,
                 "ContactDB"
-        ).build();
+        )
+                .addCallback(callback)
+                .build();
 
         // Initialize ExecutorService with a fixed thread pool
         executorService = Executors.newFixedThreadPool(2); // Two threads for background tasks
@@ -217,4 +223,23 @@ public class MainActivity extends AppCompatActivity {
         // Shutdown ExecutorService when activity is destroyed
         executorService.shutdown();
     }
+    RoomDatabase.Callback callback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+
+            Log.i("MainActivity", "callback on create invoked");
+            createContact("name 1", "email 1");
+            createContact("name 2", "email 2");
+            createContact("name 3", "email 3");
+            createContact("name 4", "email 4");
+
+        }
+
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+            Log.i("MainActivity", "callback on create invoked");
+        }
+    };
 }
