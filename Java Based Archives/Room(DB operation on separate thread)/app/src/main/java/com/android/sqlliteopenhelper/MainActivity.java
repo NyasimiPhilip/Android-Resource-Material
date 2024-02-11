@@ -1,5 +1,6 @@
 package com.android.sqlliteopenhelper;
 
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,12 +27,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
     private ContactsAdapter contactsAdapter;
     private final ArrayList<Contact> contactArrayList = new ArrayList<>();
     private ContactAppDatabase contactAppDatabase;
+    private ExecutorService executorService; // ExecutorService for managing background tasks
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +50,23 @@ public class MainActivity extends AppCompatActivity {
         // Initializing RecyclerView and ContactAppDatabase
         RecyclerView recyclerView = findViewById(R.id.recycler_view_contacts);
         contactAppDatabase = Room.databaseBuilder(
-                        getApplicationContext(),
-                        ContactAppDatabase.class,
-                        "ContactDB")
-                .allowMainThreadQueries()//execute on the main thread not recommended in practice
-                .build();
+                getApplicationContext(),
+                ContactAppDatabase.class,
+                "ContactDB"
+        ).build();
+
+        // Initialize ExecutorService with a fixed thread pool
+        executorService = Executors.newFixedThreadPool(2); // Two threads for background tasks
 
         // Retrieving contacts from database
-        contactArrayList.addAll(contactAppDatabase.getContactDAO().getContacts());
+        // Execute database query asynchronously using ExecutorService
+        executorService.execute(() -> {
+            contactArrayList.addAll(contactAppDatabase.getContactDAO().getContacts());
+            // Update UI on the main thread after database query completes
+            runOnUiThread(() -> {
+                contactsAdapter.notifyDataSetChanged();
+            });
+        });
 
         // Initializing ContactsAdapter and setting up RecyclerView
         contactsAdapter = new ContactsAdapter(this, contactArrayList, MainActivity.this);
@@ -97,36 +110,35 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to delete a contact
     private void deleteContact(Contact contact, int position) {
-        contactAppDatabase.getContactDAO().deleteContact(contact);
-        contactArrayList.remove(position);
-        contactsAdapter.notifyDataSetChanged();
+        executorService.execute(() -> {
+            contactAppDatabase.getContactDAO().deleteContact(contact);
+            contactArrayList.remove(position);
+            // Update UI on the main thread after deletion
+            runOnUiThread(() -> {
+                contactsAdapter.notifyDataSetChanged();
+            });
+        });
     }
 
     // Method to update a contact
     public void addAndEditContacts(final boolean isUpdate, final Contact contact, final int position) {
-        // Inflate the layout for the dialog
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());
         View view = layoutInflaterAndroid.inflate(R.layout.layout_add_contact, null);
 
-        // Create an AlertDialog Builder
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(MainActivity.this);
         alertDialogBuilderUserInput.setView(view);
 
-        // Find views in the layout
         TextView contactTitle = view.findViewById(R.id.new_contact_title);
         final EditText newContact = view.findViewById(R.id.name);
         final EditText contactEmail = view.findViewById(R.id.email);
 
-        // Set dialog title
         contactTitle.setText(!isUpdate ? "Add New Contact" : "Edit Contact");
 
-        // Populate EditText fields if editing existing contact
         if (isUpdate && contact != null) {
             newContact.setText(contact.getName());
             contactEmail.setText(contact.getEmail());
         }
 
-        // Configure buttons for positive (save/update) and negative (delete/cancel) actions
         alertDialogBuilderUserInput
                 .setCancelable(false)
                 .setPositiveButton(isUpdate ? "Update" : "Save", new DialogInterface.OnClickListener() {
@@ -136,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
-                        // If updating, delete the contact; otherwise, cancel the dialog
                         if (isUpdate) {
                             deleteContact(contact, position);
                         } else {
@@ -145,15 +156,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        // Create and show the dialog
-        final AlertDialog alertDialog = alertDialogBuilderUserInput.create();
+        AlertDialog alertDialog = alertDialogBuilderUserInput.create();
         alertDialog.show();
 
-        // Set custom onClickListener for positive button to handle validation and save/update actions
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Check if contact name is empty
                 if (TextUtils.isEmpty(newContact.getText().toString())) {
                     Toast.makeText(MainActivity.this, "Enter contact name!", Toast.LENGTH_SHORT).show();
                     return;
@@ -161,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.dismiss();
                 }
 
-                // If updating, call updateContact method; otherwise, call createContact method
                 if (isUpdate && contact != null) {
                     contact.setName(newContact.getText().toString());
                     contact.setEmail(contactEmail.getText().toString());
@@ -178,19 +185,36 @@ public class MainActivity extends AppCompatActivity {
         Contact contact = contactArrayList.get(position);
         contact.setName(name);
         contact.setEmail(email);
-        contactAppDatabase.getContactDAO().updateContact(contact);
-        contactArrayList.set(position, contact);
-        contactsAdapter.notifyDataSetChanged();
+        executorService.execute(() -> {
+            contactAppDatabase.getContactDAO().updateContact(contact);
+            contactArrayList.set(position, contact);
+            // Update UI on the main thread after update
+            runOnUiThread(() -> {
+                contactsAdapter.notifyDataSetChanged();
+            });
+        });
     }
 
     // Method to create a new contact
     private void createContact(String name, String email) {
-        Contact contact = new Contact();
-        contact.setName(name);
-        contact.setEmail(email);
-        long id = contactAppDatabase.getContactDAO().addContact(contact);
-        contact.setId(id);
-        contactArrayList.add(0, contact);
-        contactsAdapter.notifyDataSetChanged();
+        executorService.execute(() -> {
+            Contact contact = new Contact();
+            contact.setName(name);
+            contact.setEmail(email);
+            long id = contactAppDatabase.getContactDAO().addContact(contact);
+            contact.setId(id);
+            contactArrayList.add(0, contact);
+            // Update UI on the main thread after creation
+            runOnUiThread(() -> {
+                contactsAdapter.notifyDataSetChanged();
+            });
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Shutdown ExecutorService when activity is destroyed
+        executorService.shutdown();
     }
 }
