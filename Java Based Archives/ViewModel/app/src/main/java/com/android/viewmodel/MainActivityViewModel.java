@@ -1,9 +1,9 @@
 package com.android.viewmodel;
 
-
+// Import necessary classes
 import androidx.lifecycle.ViewModel;
 
-
+// Define MainActivityViewModel class, extending ViewModel
 public class MainActivityViewModel extends ViewModel {
 
     // Member variable to hold the count of clicks
