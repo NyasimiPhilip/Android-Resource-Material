@@ -1,30 +1,33 @@
 package com.android.sqlliteopenhelper.db.entity;
 
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "contacts")
 public class Contact {
-
-    // Define table and column names
-    public static final String TABLE_NAME = "contacts";
-    public static final String COLUMN_ID = "contact_id";
-    public static final String COLUMN_NAME = "contact_name";
-    public static final String COLUMN_EMAIL = "contact_email";
-
-    // Define fields for contact information
+    @ColumnInfo(name = "contact_name")
     private String name;
+    @ColumnInfo(name = "contact_email")
     private String email;
+    @ColumnInfo(name = "contact_id")
+    @PrimaryKey(autoGenerate = true)
     private long id;
 
     // Default constructor
+    @Ignore
     public Contact() {
     }
 
     // Parameterized constructor to initialize fields
-    public Contact(long id, String name, String email) {
+    public Contact(String name, String email) {
         this.name = name;
         this.email = email;
-        this.id = id;
     }
 
-    // Getter and setter methods for fields
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -48,12 +51,5 @@ public class Contact {
     public void setId(long id) {
         this.id = id;
     }
-
-    // Create table SQL query
-    public static final String CREATE_TABLE =
-            "CREATE TABLE " + TABLE_NAME + "("
-                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + COLUMN_NAME + " TEXT,"
-                    + COLUMN_EMAIL + " TEXT" // Corrected DATETIME to TEXT and removed DEFAULT CURRENT_TIMESTAMP
-                    + ")";
 }
+
