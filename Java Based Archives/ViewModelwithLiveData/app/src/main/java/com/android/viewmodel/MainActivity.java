@@ -1,7 +1,10 @@
 package com.android.viewmodel;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -9,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,17 +26,27 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Initializing ViewModel
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-
-
         textView=findViewById(R.id.tvCount);
-        textView.setText("Count is: "+mainActivityViewModel.getInitialCount());
+
+        // Observing LiveData for count changes
+        LiveData<Integer> count = mainActivityViewModel.getInitialCount();
+        count.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                // Updating text view with the current count
+                textView.setText(getString(R.string.count_text, integer));
+            }
+        });
+
+        // Setting onClickListener for FloatingActionButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                textView.setText("Count is: "+mainActivityViewModel.getCurrentCount());
+                // Calling method to increment count
+                mainActivityViewModel.getCurrentCount();
             }
         });
     }
@@ -45,10 +57,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -64,7 +72,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
 }
