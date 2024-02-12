@@ -1,9 +1,7 @@
 package com.android.studentregister;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,10 +10,9 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
+import com.android.studentregister.databinding.ActivityMainBinding;
 import com.android.studentregister.db.StudentAppDatabase;
 import com.android.studentregister.db.StudentDataAdapter;
 import com.android.studentregister.entity.Student;
@@ -25,28 +22,30 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class MainActivity extends AppCompatActivity {
+
     private StudentAppDatabase studentAppDatabase;
     private ArrayList<Student> students;
     private StudentDataAdapter studentDataAdapter;
     public static final int NEW_STUDENT_ACTIVITY_REQUEST_CODE = 1;
 
+    private ActivityMainBinding activityMainBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        RecyclerView recyclerView = findViewById(R.id.rvStudents);
+        // Set up RecyclerView
+        RecyclerView recyclerView = activityMainBinding.include.rvStudents;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
+        // Set up data adapter
         studentDataAdapter = new StudentDataAdapter();
         recyclerView.setAdapter(studentDataAdapter);
 
-        // Initialize the Room database
+        // Initialize Room database
         studentAppDatabase = Room.databaseBuilder(getApplicationContext(), StudentAppDatabase.class, "StudentDB")
                 .build();
 
@@ -56,19 +55,19 @@ public class MainActivity extends AppCompatActivity {
         // Set up swipe-to-delete functionality
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 return false;
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 Student studentToDelete = students.get(viewHolder.getAdapterPosition());
                 deleteStudent(studentToDelete);
             }
         }).attachToRecyclerView(recyclerView);
 
         // Set up FloatingActionButton to add new students
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = activityMainBinding.fab;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Handle the result of AddNewStudentActivity
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_STUDENT_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             // Extract data from the intent
@@ -162,24 +161,5 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
             loadData();
         }
-    }
-
-    // Inflate the menu; this adds items to the action bar if it is present.
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
