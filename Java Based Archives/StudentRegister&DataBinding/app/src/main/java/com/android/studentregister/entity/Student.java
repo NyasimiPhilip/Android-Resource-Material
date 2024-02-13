@@ -10,6 +10,7 @@ import com.android.studentregister.BR;
 
 @Entity(tableName = "student_table")
 public class Student extends BaseObservable {
+
     @PrimaryKey(autoGenerate = true)
     private int studentId;
     private String name;
@@ -17,7 +18,7 @@ public class Student extends BaseObservable {
     private String country;
     private String registeredTime;
 
-    // Default constructor
+    // Default constructor, marked with @Ignore annotation to avoid room conflicts
     @Ignore
     public Student() {
     }
@@ -36,7 +37,6 @@ public class Student extends BaseObservable {
     public int getStudentId() {
         return studentId;
     }
-
     public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
@@ -59,7 +59,6 @@ public class Student extends BaseObservable {
     public void setEmail(String email) {
         this.email = email;
         notifyPropertyChanged(BR.email);
-
     }
 
     @Bindable
@@ -69,7 +68,7 @@ public class Student extends BaseObservable {
 
     public void setCountry(String country) {
         this.country = country;
-
+        notifyPropertyChanged(BR.country);
     }
 
     @Bindable
@@ -80,6 +79,5 @@ public class Student extends BaseObservable {
     public void setRegisteredTime(String registeredTime) {
         this.registeredTime = registeredTime;
         notifyPropertyChanged(BR.registeredTime);
-
     }
 }
