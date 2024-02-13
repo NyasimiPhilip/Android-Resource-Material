@@ -2,31 +2,43 @@ package com.android.completemvvm.model;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "books_table")
+@Entity(tableName = "books_table",
+        foreignKeys = @ForeignKey(
+                entity = Category.class,
+                parentColumns = "id",
+                childColumns = "category_id",
+                onDelete = ForeignKey.CASCADE))
 public class Book extends BaseObservable {
 
     @PrimaryKey(autoGenerate = true)
     private int bookId;
+
     @ColumnInfo(name= "book_name")
     private String bookName;
+
     @ColumnInfo(name= "unit_price")
     private String unitPrice;
+
     @ColumnInfo(name= "category_id")
     private int categoryId;
 
     public Book(){
 
     }
+
     public Book(int bookId, String bookName, String unitPrice, int categoryId){
         this.bookId = bookId;
         this.bookName = bookName;
         this.unitPrice = unitPrice;
         this.categoryId = categoryId;
     }
+
     @Bindable
     public int getBookId() {
         return bookId;
@@ -34,6 +46,7 @@ public class Book extends BaseObservable {
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
+        notifyPropertyChanged(BR.bookId);
     }
 
     @Bindable
@@ -43,6 +56,7 @@ public class Book extends BaseObservable {
 
     public void setBookName(String bookName) {
         this.bookName = bookName;
+        notifyPropertyChanged(BR.bookName);
     }
 
     @Bindable
@@ -52,6 +66,7 @@ public class Book extends BaseObservable {
 
     public void setUnitPrice(String unitPrice) {
         this.unitPrice = unitPrice;
+        notifyPropertyChanged(BR.unitPrice);
     }
 
     @Bindable
@@ -61,5 +76,6 @@ public class Book extends BaseObservable {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+        notifyPropertyChanged(BR.categoryId);
     }
 }

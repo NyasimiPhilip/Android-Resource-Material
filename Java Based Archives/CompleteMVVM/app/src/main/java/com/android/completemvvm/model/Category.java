@@ -7,7 +7,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "categories_table")
 public class Category extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
     private int id;
