@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
+        <import type="android.text.TextWatcher" />
+
+        <variable
+            name="student"
+            type="com.android.studentregister.entity.Student" />
+
         <variable
             name="clickHandlers"
             type="com.android.studentregister.AddNewStudentActivityClickHandlers" />
@@ -102,6 +108,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:text="@={student.name}"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,6 +128,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:text="@={student.email}"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,6 +148,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
+        android:text="@={student.country}"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

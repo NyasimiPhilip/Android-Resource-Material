@@ -1,14 +1,12 @@
 package com.android.studentregister.db;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.studentregister.R;
+import com.android.studentregister.databinding.StudentListItemBinding;
 import com.android.studentregister.entity.Student;
 
 import java.util.ArrayList;
@@ -21,34 +19,27 @@ public class StudentDataAdapter extends RecyclerView.Adapter<StudentDataAdapter.
     // Method to create ViewHolder instances
     @NonNull
     @Override
-    public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        // Inflate the layout for each item in the RecyclerView
-        View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.student_list_item, viewGroup, false);
-        return new StudentViewHolder(itemView);
+    public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate the layout for each item in the RecyclerView using data binding
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        StudentListItemBinding itemBinding = StudentListItemBinding.inflate(layoutInflater, parent, false);
+        return new StudentViewHolder(itemBinding);
     }
 
     // Method to bind data to ViewHolder instances
     @Override
-    public void onBindViewHolder(@NonNull StudentViewHolder studentViewHolder, int i) {
+    public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
         // Retrieve the current student from the list
-        Student currentStudent = students.get(i);
+        Student currentStudent = students.get(position);
 
-        // Set the data to the TextViews in the ViewHolder
-        studentViewHolder.name.setText(currentStudent.getName());
-        studentViewHolder.email.setText(currentStudent.getEmail());
-        studentViewHolder.country.setText(currentStudent.getCountry());
-        studentViewHolder.date.setText(currentStudent.getRegisteredTime());
+        // Bind the student object to the layout using data binding
+        holder.bind(currentStudent);
     }
 
     // Method to determine the number of items in the RecyclerView
     @Override
     public int getItemCount() {
-        if (students != null) {
-            return students.size();
-        } else {
-            return 0;
-        }
+        return students == null ? 0 : students.size();
     }
 
     // Method to update the list of students and notify the adapter of the change
@@ -59,15 +50,20 @@ public class StudentDataAdapter extends RecyclerView.Adapter<StudentDataAdapter.
 
     // ViewHolder class to hold the views for each item in the RecyclerView
     static class StudentViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, email, country, date;
+        private final StudentListItemBinding binding;
 
-        // Constructor to initialize the views
-        public StudentViewHolder(@NonNull View itemView) {
-            super(itemView);
-            name = itemView.findViewById(R.id.tvName);
-            email = itemView.findViewById(R.id.tvEmail);
-            country = itemView.findViewById(R.id.tvCountry);
-            date = itemView.findViewById(R.id.tvTime);
+        // Constructor to initialize the views using data binding
+        public StudentViewHolder(@NonNull StudentListItemBinding itemBinding) {
+            super(itemBinding.getRoot());
+            this.binding = itemBinding;
+        }
+
+        // Method to bind the student object to the layout using data binding
+        public void bind(Student student) {
+            binding.setStudent(student);
+            // This is necessary to force the data binding to execute immediately,
+            // otherwise, it would wait until the next layout pass to update the UI
+            binding.executePendingBindings();
         }
     }
 }

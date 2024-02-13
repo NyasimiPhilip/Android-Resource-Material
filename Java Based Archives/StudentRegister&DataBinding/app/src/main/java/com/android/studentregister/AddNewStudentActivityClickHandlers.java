@@ -8,34 +8,29 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.databinding.DataBindingUtil;
-
-import com.android.studentregister.databinding.ActivityAddNewStudentBinding;
+import com.android.studentregister.entity.Student;
 
 public class AddNewStudentActivityClickHandlers {
     private Context context;
+    private Student student;
 
-    public AddNewStudentActivityClickHandlers(Context context) {
+    public AddNewStudentActivityClickHandlers(Context context, Student student) {
         this.context = context;
+        this.student = student;
     }
 
     public void onSubmitButtonClick(View view) {
-        ActivityAddNewStudentBinding binding = DataBindingUtil.findBinding(view);
-        if (binding != null) {
-            // Get the input data using data binding
-            String name = binding.etName.getText().toString();
-            String email = binding.etEmail.getText().toString();
-            String country = binding.etCountry.getText().toString();
 
+        if (student != null) {
             // Check if the name field is empty
-            if (TextUtils.isEmpty(name)) {
+            if (TextUtils.isEmpty(student.getName())) {
                 Toast.makeText(context, "Name field cannot be empty", Toast.LENGTH_LONG).show();
             } else {
                 // Create an intent to pass the data back to the MainActivity
                 Intent intent = new Intent();
-                intent.putExtra("NAME", name);
-                intent.putExtra("EMAIL", email);
-                intent.putExtra("COUNTRY", country);
+                intent.putExtra("NAME", student.getName());
+                intent.putExtra("EMAIL", student.getEmail());
+                intent.putExtra("COUNTRY", student.getCountry());
                 ((AddNewStudentActivity) context).setResult(RESULT_OK, intent);
                 ((AddNewStudentActivity) context).finish(); // Finish the activity
             }

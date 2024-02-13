@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import com.android.studentregister.MainActivityClickHandlers;
 import com.android.studentregister.databinding.ActivityMainBinding;
 import com.android.studentregister.db.StudentAppDatabase;
 import com.android.studentregister.db.StudentDataAdapter;
