@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.android.studentregister.BR;
+
 @Entity(tableName = "student_table")
 public class Student extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
@@ -46,7 +48,7 @@ public class Student extends BaseObservable {
 
     public void setName(String name) {
         this.name = name;
-
+        notifyPropertyChanged(BR.name);
     }
 
     @Bindable
@@ -56,6 +58,7 @@ public class Student extends BaseObservable {
 
     public void setEmail(String email) {
         this.email = email;
+        notifyPropertyChanged(BR.email);
 
     }
 
@@ -76,6 +79,7 @@ public class Student extends BaseObservable {
 
     public void setRegisteredTime(String registeredTime) {
         this.registeredTime = registeredTime;
+        notifyPropertyChanged(BR.registeredTime);
 
     }
 }

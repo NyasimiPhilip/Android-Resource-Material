@@ -1,5 +1,9 @@
 package com.android.studentregister;
 
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -7,16 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.View;
-
+import com.android.studentregister.MainActivityClickHandlers;
 import com.android.studentregister.databinding.ActivityMainBinding;
 import com.android.studentregister.db.StudentAppDatabase;
 import com.android.studentregister.db.StudentDataAdapter;
 import com.android.studentregister.entity.Student;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,11 +29,16 @@ public class MainActivity extends AppCompatActivity {
     public static final int NEW_STUDENT_ACTIVITY_REQUEST_CODE = 1;
 
     private ActivityMainBinding activityMainBinding;
+    private MainActivityClickHandlers clickHandlers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        // Set up click handlers
+        clickHandlers = new MainActivityClickHandlers(this);
+        activityMainBinding.setClickHandlers(clickHandlers);
 
         // Set up RecyclerView
         RecyclerView recyclerView = activityMainBinding.include.rvStudents;
@@ -65,16 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 deleteStudent(studentToDelete);
             }
         }).attachToRecyclerView(recyclerView);
-
-        // Set up FloatingActionButton to add new students
-        FloatingActionButton fab = activityMainBinding.fab;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddNewStudentActivity.class);
-                startActivityForResult(intent, NEW_STUDENT_ACTIVITY_REQUEST_CODE);
-            }
-        });
     }
 
     // Handle the result of AddNewStudentActivity

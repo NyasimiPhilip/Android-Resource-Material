@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="clickHandlers"
+            type="com.android.studentregister.AddNewStudentActivityClickHandlers" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,6 +18,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="248dp"
         android:layout_height="58dp"
+        android:onClick="@{clickHandlers::onSubmitButtonClick}"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
