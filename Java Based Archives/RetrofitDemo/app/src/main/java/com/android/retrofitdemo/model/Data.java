@@ -1,8 +1,8 @@
 // Data.java
 
-// YApi QuickType插件生成，具体参考文档:https://plugins.jetbrains.com/plugin/18847-yapi-quicktype/documentation
 
 package com.android.retrofitdemo.model;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -58,7 +58,7 @@ public class Data {
     private List<String> altSpellings;
 
     @SerializedName("area")
-    private long area;
+    private double area;
 
     @SerializedName("languages")
     private Languages languages;
@@ -103,7 +103,7 @@ public class Data {
     private String region;
 
     @SerializedName("latlng")
-    private List<Long> latlng;
+    private List<Double> latlng;
 
     @SerializedName("cca2")
     private String cca2;
@@ -163,8 +163,8 @@ public class Data {
     public List<String> getAltSpellings() { return altSpellings; }
     public void setAltSpellings(List<String> value) { this.altSpellings = value; }
 
-    public long getArea() { return area; }
-    public void setArea(long value) { this.area = value; }
+    public double getArea() { return area; }
+    public void setArea(double area) { this.area = area; }
 
     public Languages getLanguages() { return languages; }
     public void setLanguages(Languages value) { this.languages = value; }
@@ -208,8 +208,8 @@ public class Data {
     public String getRegion() { return region; }
     public void setRegion(String value) { this.region = value; }
 
-    public List<Long> getLatlng() { return latlng; }
-    public void setLatlng(List<Long> value) { this.latlng = value; }
+    public List<Double> getLatlng() { return latlng; }
+    public void setLatlng(List<Double> value) { this.latlng = value; }
 
     public String getCca2() { return cca2; }
     public void setCca2(String value) { this.cca2 = value; }
@@ -386,6 +386,10 @@ class Name {
     private String common;
     @SerializedName("official")
     private String official;
+    @Override
+    public String toString() {
+        return this.common;
+    }
 
     public NativeName getNativeName() { return nativeName; }
     public void setNativeName(NativeName value) { this.nativeName = value; }
@@ -432,4 +436,7 @@ class PostalCode {
 
     public String getFormat() { return format; }
     public void setFormat(String value) { this.format = value; }
+
+
+
 }
