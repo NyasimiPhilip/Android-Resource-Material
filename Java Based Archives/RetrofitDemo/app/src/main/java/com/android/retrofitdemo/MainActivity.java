@@ -3,15 +3,25 @@ package com.android.retrofitdemo;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.retrofitdemo.adapter.CountryAdapter;
 import com.android.retrofitdemo.model.Data;
 import com.android.retrofitdemo.service.RestCountriesService;
 import com.android.retrofitdemo.service.RetroFitInstance;
+
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+    private ArrayList<Data> data;
+    private CountryAdapter countryAdapter;
+    private RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +66,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void processData(List<Data> dataList) {
+        // Initialize RecyclerView and CountryAdapter
+        recyclerView = findViewById(R.id.rvCountries);
+        countryAdapter = new CountryAdapter((ArrayList<Data>) dataList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(countryAdapter);
+    }
+
+
+ /*   private void processData(List<Data> dataList) {
         // Process and display data as needed
         for (Data data : dataList) {
             Log.d("MainActivity", "Country Name: " + data.getName());
@@ -70,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Log additional data or perform other operations
         }
-    }
+    }*/
 
 
 

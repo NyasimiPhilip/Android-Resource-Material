@@ -219,6 +219,7 @@ public class Data {
 
     public Currencies getCurrencies() { return currencies; }
     public void setCurrencies(Currencies value) { this.currencies = value; }
+
 }
 
 // CapitalInfo.java
@@ -386,10 +387,6 @@ class Name {
     private String common;
     @SerializedName("official")
     private String official;
-    @Override
-    public String toString() {
-        return this.common;
-    }
 
     public NativeName getNativeName() { return nativeName; }
     public void setNativeName(NativeName value) { this.nativeName = value; }
@@ -399,6 +396,10 @@ class Name {
 
     public String getOfficial() { return official; }
     public void setOfficial(String value) { this.official = value; }
+    @Override
+    public String toString() {
+        return this.common;
+    }
 }
 
 // NativeName.java
