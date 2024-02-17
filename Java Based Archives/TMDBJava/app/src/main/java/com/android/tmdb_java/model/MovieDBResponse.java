@@ -2,33 +2,32 @@ package com.android.tmdb_java.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
-public class MovieDBResponse implements Parcelable
-{
+public class MovieDBResponse implements Parcelable {
 
     @SerializedName("page")
     @Expose
     private Integer page;
+
     @SerializedName("total_results")
     @Expose
     private Integer totalMovies;
+
     @SerializedName("total_pages")
     @Expose
     private Integer totalPages;
+
     @SerializedName("results")
     @Expose
-    private List<Movie> Movies = null;
+    private List<Movie> movies = null;
+
+    // Parcelable.Creator implementation for deserialization
     public final static Parcelable.Creator<MovieDBResponse> CREATOR = new Creator<MovieDBResponse>() {
 
-
-        @SuppressWarnings({
-                "unchecked"
-        })
+        @SuppressWarnings({"unchecked"})
         public MovieDBResponse createFromParcel(Parcel in) {
             return new MovieDBResponse(in);
         }
@@ -37,19 +36,21 @@ public class MovieDBResponse implements Parcelable
             return (new MovieDBResponse[size]);
         }
 
-    }
-            ;
+    };
 
+    // Constructor for deserialization
     protected MovieDBResponse(Parcel in) {
-        this.page = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.totalMovies = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.totalPages = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        in.readList(this.Movies, (com.android.tmdb_java.model.Movie.class.getClassLoader()));
+        this.page = in.readInt();
+        this.totalMovies = in.readInt();
+        this.totalPages = in.readInt();
+        in.readList(this.movies, Movie.class.getClassLoader());
     }
 
+    // Empty constructor
     public MovieDBResponse() {
     }
 
+    // Getters and setters for page, totalMovies, totalPages, and movies
     public Integer getPage() {
         return page;
     }
@@ -75,22 +76,22 @@ public class MovieDBResponse implements Parcelable
     }
 
     public List<Movie> getMovies() {
-        return Movies;
+        return movies;
     }
 
-    public void setMovies(List<Movie> Movies) {
-        this.Movies = Movies;
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 
+    // Methods for writing and reading to/from a Parcel
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(page);
-        dest.writeValue(totalMovies);
-        dest.writeValue(totalPages);
-        dest.writeList(Movies);
+        dest.writeInt(page);
+        dest.writeInt(totalMovies);
+        dest.writeInt(totalPages);
+        dest.writeList(movies);
     }
 
     public int describeContents() {
         return 0;
     }
-
 }
