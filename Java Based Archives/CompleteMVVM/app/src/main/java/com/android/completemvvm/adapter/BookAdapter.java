@@ -6,8 +6,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.completemvvm.BooksDiffCallback;
 import com.android.completemvvm.R;
 import com.android.completemvvm.databinding.BookListItemBinding;
 import com.android.completemvvm.model.Book;
@@ -47,9 +49,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     }
 
     // Method to set the list of books and update the UI
-    public void setBooks(ArrayList<Book> books) {
-        this.books = books;
-        notifyDataSetChanged();
+    public void setBooks(ArrayList<Book> newBooks) {
+       /* this.books = books;
+        notifyDataSetChanged();*/
+        final DiffUtil.DiffResult result = DiffUtil.calculateDiff(new BooksDiffCallback(books, newBooks), false);
+        books = newBooks;
+        result.dispatchUpdatesTo(BookAdapter.this);
     }
 
     // ViewHolder class
