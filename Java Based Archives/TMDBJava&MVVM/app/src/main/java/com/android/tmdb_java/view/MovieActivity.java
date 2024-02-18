@@ -23,9 +23,12 @@ public class MovieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Inflate the layout using data binding
         binding = ActivityMovieBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set up the toolbar
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -36,6 +39,7 @@ public class MovieActivity extends AppCompatActivity {
         // Retrieve movie details from the intent
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("movie")) {
+            // Get movie object from intent
             Movie movie = intent.getParcelableExtra("movie");
             if (movie != null) {
                 // Set movie details in ViewModel
@@ -48,9 +52,6 @@ public class MovieActivity extends AppCompatActivity {
         // Observe changes in the movie data
         viewModel.getMovie().observe(this, movie -> {
             if (movie != null) {
-           /* Display movie title in a toast
-           Toast.makeText(getApplicationContext(), movie.getOriginalTitle(), Toast.LENGTH_LONG).show();
-           */
                 // Load movie image using Glide
                 String image = movie.getPosterPath();
                 String path = "https://image.tmdb.org/t/p/w500" + image;
@@ -61,7 +62,6 @@ public class MovieActivity extends AppCompatActivity {
 
                 // Set activity title
                 getSupportActionBar().setTitle(movie.getTitle());
-
             }
         });
     }

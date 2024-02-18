@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle("TMDB Popular Movies Today");
 
+        // Initialize ViewModel
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         // Initialize SwipeRefreshLayout
@@ -49,23 +50,27 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, calculateSpanCount()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        movieAdapter = new MovieAdapter(this); // Initialize MovieAdapter with an empty list
+        // Initialize MovieAdapter with an empty list
+        movieAdapter = new MovieAdapter(this);
         recyclerView.setAdapter(movieAdapter);
 
+        // Fetch popular movies
         getPopularMovies();
     }
 
+    // Method to fetch popular movies
     private void getPopularMovies() {
         mainActivityViewModel.getAllMovies().observe(this, movies -> {
             if (movies != null) {
-                movieAdapter.updateMovies(movies);
+                movieAdapter.updateMovies(movies); // Update RecyclerView with new movie list
             } else {
                 Toast.makeText(MainActivity.this, "Failed to fetch movies", Toast.LENGTH_SHORT).show();
             }
-            binding.swipeRefreshLayout.setRefreshing(false);
+            binding.swipeRefreshLayout.setRefreshing(false); // Stop the SwipeRefreshLayout loading indicator
         });
     }
 
+    // Method to calculate the span count based on the screen orientation
     private int calculateSpanCount() {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 4;
     }

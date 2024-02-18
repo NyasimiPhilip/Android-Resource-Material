@@ -16,10 +16,13 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
+        // Initialize the movie repository
         movieRepository = new MovieRepository(application);
-
     }
+
+    // Method to get all movies from the repository
     public LiveData<List<Movie>> getAllMovies() {
+        // Return the LiveData containing the list of movies
         return movieRepository.getMutableLiveData();
     }
 }
