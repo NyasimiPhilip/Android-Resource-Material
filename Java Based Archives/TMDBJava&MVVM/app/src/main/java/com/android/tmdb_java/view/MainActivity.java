@@ -2,11 +2,12 @@ package com.android.tmdb_java.view;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,109 +15,58 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.tmdb_java.R;
 import com.android.tmdb_java.adapter.MovieAdapter;
-import com.android.tmdb_java.model.Movie;
-import com.android.tmdb_java.model.MovieDBResponse;
-import com.android.tmdb_java.service.MovieDataService;
-import com.android.tmdb_java.service.RetrofitInstance;
-
-import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.android.tmdb_java.databinding.ActivityMainBinding;
+import com.android.tmdb_java.viewmodel.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Movie> movies;
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout; // Added SwipeRefreshLayout
+    private ActivityMainBinding binding;
+    private MainActivityViewModel mainActivityViewModel;
+    private MovieAdapter movieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        // Inflate the layout using data binding
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         // Set up the action bar
-        setSupportActionBar(findViewById(R.id.toolbar));
+        setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle("TMDB Popular Movies Today");
 
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+
         // Initialize SwipeRefreshLayout
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        /*swipeRefreshLayout.getResources().getColor(R.color.colorPrimary);*/
+        SwipeRefreshLayout swipeRefreshLayout = binding.swipeRefreshLayout;
         // Get the color from resources
         int colorPrimary = ContextCompat.getColor(this, R.color.colorPrimaryDark);
-
         // Set the color to the SwipeRefreshLayout
         swipeRefreshLayout.setColorSchemeColors(colorPrimary);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Handle refresh action
-                getPopularMovies();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this::getPopularMovies);
 
         // Initialize RecyclerView
-        recyclerView = findViewById(R.id.rvMovies);
+        RecyclerView recyclerView = binding.rvMovies;
         recyclerView.setLayoutManager(new GridLayoutManager(this, calculateSpanCount()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // Fetch popular movies
+        movieAdapter = new MovieAdapter(this); // Initialize MovieAdapter with an empty list
+        recyclerView.setAdapter(movieAdapter);
+
         getPopularMovies();
+    }
+
+    private void getPopularMovies() {
+        mainActivityViewModel.getAllMovies().observe(this, movies -> {
+            if (movies != null) {
+                movieAdapter.updateMovies(movies);
+            } else {
+                Toast.makeText(MainActivity.this, "Failed to fetch movies", Toast.LENGTH_SHORT).show();
+            }
+            binding.swipeRefreshLayout.setRefreshing(false);
+        });
     }
 
     private int calculateSpanCount() {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 4;
-    }
-
-    private void getPopularMovies() {
-        MovieDataService movieDataService = RetrofitInstance.getService();
-        Call<MovieDBResponse> call = movieDataService.getPopularMovies(getString(R.string.api_key));
-
-        // Show loading indicator
-        Toast.makeText(MainActivity.this, "Fetching popular movies...", Toast.LENGTH_SHORT).show();
-
-        call.enqueue(new Callback<MovieDBResponse>() {
-            @Override
-            public void onResponse(Call<MovieDBResponse> call, Response<MovieDBResponse> response) {
-                if (response.isSuccessful()) {
-                    MovieDBResponse movieDBResponse = response.body();
-                    if (movieDBResponse != null && movieDBResponse.getMovies() != null) {
-                        movies = new ArrayList<>(movieDBResponse.getMovies());
-                        showMovies();
-                        // Show success message
-                        Toast.makeText(MainActivity.this, "Popular movies loaded successfully!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Show empty state
-                        Toast.makeText(MainActivity.this, "No movies found!", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    // Show error message
-                    Toast.makeText(MainActivity.this, "Failed to fetch popular movies. Please try again later.", Toast.LENGTH_SHORT).show();
-                }
-
-                // Log the movie data
-                Log.d("wapi", "Movie Data: " + movies);
-
-                // Stop the SwipeRefreshLayout's refreshing animation
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(Call<MovieDBResponse> call, Throwable t) {
-                // Show error message
-                Toast.makeText(MainActivity.this, "Failed to fetch popular movies. Please check your internet connection.", Toast.LENGTH_SHORT).show();
-
-                // Stop the SwipeRefreshLayout's refreshing animation
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-    }
-
-    private void showMovies() {
-        MovieAdapter movieAdapter = new MovieAdapter(this, movies);
-        recyclerView.setAdapter(movieAdapter);
-        movieAdapter.notifyDataSetChanged();
     }
 }
