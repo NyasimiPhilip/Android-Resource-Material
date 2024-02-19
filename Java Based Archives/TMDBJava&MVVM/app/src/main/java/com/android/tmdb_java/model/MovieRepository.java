@@ -16,17 +16,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// MovieRepository class acts as an intermediary between the ViewModel and the data source (API)
 public class MovieRepository {
-    private ArrayList<Movie> movies = new ArrayList<>();
-    private MutableLiveData<List<Movie>> mutableLiveData = new MutableLiveData<>();
-    private Context context;
+    // Instance variables
+    private ArrayList<Movie> movies = new ArrayList<>(); // List to hold retrieved movies
+    private MutableLiveData<List<Movie>> mutableLiveData = new MutableLiveData<>(); // LiveData to observe changes in the list of movies
+    private Context context; // Application context
 
+    // Constructor
     public MovieRepository(Context context) {
-        this.context = context;
+        this.context = context; // Initialize application context
     }
 
+    // Method to retrieve LiveData containing list of movies
     public MutableLiveData<List<Movie>> getMutableLiveData() {
+        // Initialize MovieDataService using RetrofitInstance
         MovieDataService movieDataService = RetrofitInstance.getService();
+
+        // Make API call to retrieve popular movies
         Call<MovieDBResponse> call = movieDataService.getPopularMovies(context.getString(R.string.api_key));
         call.enqueue(new Callback<MovieDBResponse>() {
             @Override
@@ -35,7 +42,7 @@ public class MovieRepository {
                     MovieDBResponse movieDBResponse = response.body();
                     if (movieDBResponse != null && movieDBResponse.getMovies() != null) {
                         movies = new ArrayList<>(movieDBResponse.getMovies());
-                        showMovies();
+                        showMovies(); // Update LiveData with retrieved movies
                         // Show success message
                         Toast.makeText(context, "Popular movies loaded successfully!", Toast.LENGTH_SHORT).show();
                     } else {
@@ -54,10 +61,11 @@ public class MovieRepository {
                 Toast.makeText(context, "Failed to fetch popular movies. Please check your internet connection.", Toast.LENGTH_SHORT).show();
             }
         });
-        return mutableLiveData;
+        return mutableLiveData; // Return LiveData containing list of movies
     }
 
+    // Method to update LiveData with retrieved movies
     private void showMovies() {
-        mutableLiveData.setValue(movies);
+        mutableLiveData.setValue(movies); // Update LiveData with list of movies
     }
 }

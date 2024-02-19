@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="com.android.tmdb_java.model.Movie" />
         <variable
@@ -30,7 +32,9 @@
                 android:layout_height="200dp"
                 android:id="@+id/ivMovie"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:contentDescription="@string/pictures" />
+
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -42,7 +46,7 @@
                 android:paddingTop="10dp"
                 android:text="@{movie.title}"
                 android:textColor="@color/colorPrimary"
-                android:textSize="15dp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/tvRating"
@@ -54,7 +58,7 @@
                 android:paddingBottom="5dp"
                 android:text="@{String.valueOf(movie.voteAverage)}"
                 android:textColor="@color/colorAccent"
-                android:textSize="12dp"/>
+                android:textSize="12sp"/>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

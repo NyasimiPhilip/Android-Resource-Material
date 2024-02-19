@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.tmdb_java.R;
@@ -15,10 +16,67 @@ import com.android.tmdb_java.model.Movie;
 import com.android.tmdb_java.view.MovieActivity;
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-import java.util.List;
+// Adapter for displaying movies in a RecyclerView
+public class MovieAdapter extends PagedListAdapter<Movie, MovieAdapter.MovieViewHolder> {
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+    private Context context;
+
+    public MovieAdapter(Context context) {
+        super(Movie.CALLBACK);
+        this.context = context;
+    }
+
+    // Method to create ViewHolder
+    @NonNull
+    @Override
+    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate the movie list item layout using DataBinding
+        MovieListItemBinding movieListItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.movie_list_item, parent, false);
+
+        return new MovieViewHolder(movieListItemBinding); // Return the ViewHolder
+    }
+
+    // Method to bind data to ViewHolder
+    @Override
+    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
+        Movie movie = getItem(position); // Get the movie at the specified position
+        if (movie != null) {
+            String imagePath = "https://image.tmdb.org/t/p/w500" + movie.getPosterPath();
+
+            holder.movieListItemBinding.setMovie(movie); // Bind movie data to the ViewHolder using DataBinding
+            Glide.with(holder.itemView.getContext()) // Load movie image using Glide library
+                    .load(imagePath)
+                    .placeholder(R.drawable.loading) // Placeholder image while loading
+                    .into(holder.movieListItemBinding.ivMovie); // Set image to ImageView
+        }
+    }
+
+    // ViewHolder class for movie items
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
+        private MovieListItemBinding movieListItemBinding;
+
+        public MovieViewHolder(@NonNull MovieListItemBinding movieListItemBinding) {
+            super(movieListItemBinding.getRoot());
+            this.movieListItemBinding = movieListItemBinding;
+
+            // Handle item click
+            movieListItemBinding.getRoot().setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Movie selectedMovie = getItem(position); // Get the selected movie
+                    // Create an intent to open MovieActivity and pass the selected movie
+                    Intent intent = new Intent(context, MovieActivity.class);
+                    intent.putExtra("movie", selectedMovie);
+                    context.startActivity(intent); // Start MovieActivity
+                }
+            });
+        }
+    }
+}
+
+
+/*public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private final ArrayList<Movie> movieArrayList;
     private Context context;
 
@@ -92,4 +150,4 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             });
         }
     }
-}
+}*/
