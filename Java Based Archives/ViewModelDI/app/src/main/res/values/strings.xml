@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ViewModel</string>
+    <string name="action_settings">settings</string>
+    <string name="count_text">Count is: %d</string>
+</resources>
