@@ -24,9 +24,12 @@ import com.android.completemvvm.databinding.ActivityMainBinding;
 import com.android.completemvvm.model.Book;
 import com.android.completemvvm.model.Category;
 import com.android.completemvvm.viewModel.MainActivityViewModel;
+import com.android.completemvvm.viewModel.MainActivityViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,14 +44,21 @@ public class MainActivity extends AppCompatActivity {
     public static final int ADD_BOOK_REQUEST_CODE = 1;
     public static final int EDIT_BOOK_REQUEST_CODE = 2;
 
+    @Inject
+    public MainActivityViewModelFactory mainActivityViewModelFactory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         setSupportActionBar(activityMainBinding.toolbar);
 
+        App.getApp().getBookShopComponent().inject(this);
         // Initialize ViewModel
-        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+
+        //mainActivityViewModel = new ViewModelProvider(this,  mainActivityViewModelFactory()).get(MainActivityViewModel.class);
+// Initialize ViewModel
+        mainActivityViewModel = new ViewModelProvider(this, mainActivityViewModelFactory).get(MainActivityViewModel.class);
 
         // Initialize Click Handlers
         MainActivityClickHandlers mainActivityClickHandlers = new MainActivityClickHandlers();

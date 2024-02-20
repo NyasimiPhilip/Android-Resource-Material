@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.android.completemvvm.model.Book;
 import com.android.completemvvm.model.Category;
@@ -12,14 +13,13 @@ import com.android.completemvvm.repository.BookRepository;
 
 import java.util.List;
 
-public class MainActivityViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends ViewModel {
     private BookRepository bookRepository; // Repository for accessing data
 
     // Constructor receiving the Application object
-    public MainActivityViewModel(@NonNull Application application) {
-        super(application);
-        // Initialize the repository using the provided Application object
-        bookRepository = new BookRepository(application);
+    public MainActivityViewModel(BookRepository bookRepository) {
+
+        this.bookRepository = bookRepository;
     }
 
     // Method to get LiveData of categories
