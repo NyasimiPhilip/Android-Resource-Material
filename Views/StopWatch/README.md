@@ -1,7 +1,7 @@
 <h1>Title: Stopwatch Service Demo</h1>
 
 <h2>Introduction:</h2>
-<p>The Stopwatch Service Demo is an Android application showcasing the implementation of a background service to create a stopwatch functionality. It allows users to start, stop, and reset the stopwatch, with real-time updates displayed on the user interface.</p>
+<p>The Stopwatch Service Demo is an Android application showcasing the implementation of a background service to create a stopwatch functionality. It allows users to start, stop, and reset the stopwatch, with real-time updates displayed on the user interface</p>
 
 <h2>Feature Components:</h2>
 <ul>
