@@ -5,7 +5,7 @@ This is code for an Android application that demonstrates the lifecycle of activ
 <h2> MainActivity</h2>
 
 - When the activity is created (<code>onCreate()</code>), it sets the layout from <code>activity_main.xml</code>.
-- It initializes various UI components like TextView, EditText, and Button.
+- It initializes various UI components like TextView, EditText, and Button
 - The user enters their name in the EditText field and clicks the "Submit" button.
 - If the name field is empty, it displays a toast message asking the user to enter their name.
 - If a name is entered, it displays a welcome message along with the entered name in the TextView and makes the "Offers" button visible.
